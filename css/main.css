@@ -98,7 +98,13 @@ textarea {
    ========================================================================== */
 
 
-
+#gameboard > div > div {
+    background-color: red; 
+    width: 200px; 
+    height: 200px;
+    border: solid black 3px;
+    display: inline-block;
+}
 
 
 
