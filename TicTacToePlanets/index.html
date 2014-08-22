@@ -1,0 +1,29 @@
+<!doctype html>
+<html ng-app="TicTac">
+  <head>
+    <title>Planets!</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/angular.js"></script>
+    <script src="js/app.js"></script>
+  </head>
+  <body>
+
+    <h1>Tic Tac Toe</h1>
+    <div ng-controller="TicTacController" id="container" ng-click='switch();'>
+
+      <div ng-repeat="cellToken in cells track by $index" ng-class="{cell:true, clear:($index == 3 || $index == 6 || $index == 0), bottom: ($index == 6 || $index == 7 || $index == 8)}" 
+      ng-click = "token();" >
+          <span><img src="img/unicorn.jpeg" ng-show="cellToken === 'player1'">
+            <img src="img/flower.jpeg" ng-show="cellToken === 'player2'"></span>
+      </div>
+
+      
+     <span>{{cells}}</span>
+
+      
+
+
+          
+    </div>
+  </body>
+</html>

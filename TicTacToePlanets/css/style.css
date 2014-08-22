@@ -1,0 +1,58 @@
+body {
+	background-image: url(http://fc07.deviantart.net/fs12/i/2006/299/0/d/Rainbow_Background_stock_2__by_SimplyBackgrounds.jpg);
+	background-size: cover;
+	color: black;
+	
+}
+
+#container {
+	
+	width: 500px;
+	margin: 0 auto;
+}
+
+h1 { 
+	text-align: center;
+	color: #ff88ff;
+}
+
+h2 {
+	color: yellow;
+}
+
+.planet { 
+	border: 3px dotted lightgrey;
+	width: 600px;
+	padding: 10px 45px;
+	margin: 15px auto;
+}
+li {
+	list-style: none;
+	margin-top: 10px;
+}
+
+.cell {
+	border-left: solid orange 2px;
+	border-bottom: solid orange 2px;
+	width: 150px;
+	height: 150px;
+	display: inline-block;
+	float: left;
+	
+}
+.clear {
+	clear: both;
+	border-left: none;
+}
+.bottom {
+	border-bottom: none;
+}
+span {
+	color: red;
+	font-size: 30px;
+}
+
+img {
+	height: 200;
+	wight: 150;
+}

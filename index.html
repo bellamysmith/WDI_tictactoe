@@ -27,8 +27,12 @@
 
        <!--THIS IS WHERE THE PROJECT GOES!!!-->
        <section id = "gameboard">
-        <div ng-repeat="rows in gameBoard track by $index">
-            <div class="position" ng-repeat="position in row track by $index"></div>
+        <div class="row" 
+            ng-repeat="row in gameBoard track by $index">
+            <div class="position" 
+                ng-repeat="position in row track by $index"
+                ng-click="takeOver(parent.$index, $index, currentSymbol())">
+            </div>
         </div>
 
 

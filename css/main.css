@@ -98,14 +98,27 @@ textarea {
    ========================================================================== */
 
 
-#gameboard > div > div {
-    background-color: red; 
-    width: 200px; 
-    height: 200px;
-    border: solid black 3px;
-    display: inline-block;
+#gameboard .row {
+   
+    width: 350px; 
+    height: 100px;
+    display: block;
+    margin: 0 auto;
 }
 
+.position {
+    width: 100px;
+    height: 100px;
+    background-color: white;
+    display: inline-block;
+    border: solid yellow 2px;
+}
+.border-bottom{
+    border-bottom: none;
+}
+.border-left {
+    border-left: none;
+}
 
 
 
