@@ -1,29 +1,39 @@
 <!doctype html>
 <html ng-app="TicTac">
   <head>
-    <title>Planets!</title>
+    <link href='http://fonts.googleapis.com/css?family=Fascinate|Grand+Hotel' rel='stylesheet' type='text/css'>
+    <title>Tic Tac Toe!</title>
     <link rel="stylesheet" href="css/style.css">
     <script src="js/angular.js"></script>
     <script src="js/app.js"></script>
   </head>
-  <body>
+  <body ng-controller="TicTacController">
 
     <h1>Tic Tac Toe</h1>
-    <div ng-controller="TicTacController" id="container" ng-click='switch();'>
+    <span ng-show="currentSymbol() == 'X'">{{player1}}'s Turn</span>
+    <span ng-show="currentSymbol() == 'O'">{{player2}}'s Turn</span>
+    <div id="container" ng-click='switch();'>
 
-      <div ng-repeat="cellToken in cells track by $index" ng-class="{cell:true, clear:($index == 3 || $index == 6 || $index == 0), bottom: ($index == 6 || $index == 7 || $index == 8)}" 
-      ng-click = "token();" >
-          <span><img src="img/unicorn.jpeg" ng-show="cellToken === 'player1'">
-            <img src="img/flower.jpeg" ng-show="cellToken === 'player2'"></span>
+      <div ng-repeat="cellToken in cells track by $index" ng-class="{cell:true, clear:($index % 3 == 0), bottom: ($index == 6 || $index == 7 || $index == 8)}" 
+      ng-click = "token($index);" >
+          <div id="unicorn"><img src="img/magic_unicorn.png" ng-show="cells[$index] == 'X'">
+            <img src="img/large_cute-flower.png" ng-show="cells[$index] == 'O'"></div>
       </div>
 
       
      <span>{{cells}}</span>
 
-      
-
-
           
     </div>
+    <section class="right-sidebar">
+      <p>{{player1}}</p>
+      <img src="img/magic_unicorn.png">
+      <p>{{player2}}</p>
+      <img src="img/large_cute-flower.png">
+    </section>
+    
+<h1 ng-show="checkForTie() == true">TIE!!!!!</h1>
+
+
   </body>
 </html>
