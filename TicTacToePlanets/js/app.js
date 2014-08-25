@@ -92,24 +92,30 @@ $scope.checkForTie = function() {
   }
 };
 
-/*$scope.checkForWin = function() {
-  $scope.cells.toString();
-  if 
+/*$scope.checkForWin = function(i) {
+  if ($scope.cells.slice(0,3).toString() === "X,X,X"){
+    return true;
+  } else if {
+    
+  }
+  }
+  
+  
+*/
 
 
 
 
 
 
-
-  if ($scope.cells.indexOf(['X','X','X'])) {
+/*  if ($scope.cells.indexOf(['X','X','X'])) {
   return true;
 } else {
   return false;
 }
 }*/
 
-console.log($scope.checkForTie());
+
 
   //winner if array = [X,X,X]
 
