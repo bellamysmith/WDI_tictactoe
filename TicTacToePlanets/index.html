@@ -21,7 +21,7 @@
       </div>
 
       
-     <span>{{cells}}</span>
+     
 
           
     </div>
@@ -34,6 +34,7 @@
     
 <h1 ng-show="checkForTie() == true">TIE!!!!!</h1>
 <h1 ng-show="checkForWin() == true">WIN!!!!<h1>
+<div class= "reset" ng-click="reset()" ng-show="checkForWin() == true"><p>PLAY AGAIN</p></div>
 
 
   </body>

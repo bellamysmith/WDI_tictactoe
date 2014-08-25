@@ -71,3 +71,13 @@ img {
 	font-family: 'Grand Hotel', cursive;
 	background-color: rgba(255, 255, 255, .6);
 }
+
+.reset {
+	background-color: purple; 
+	color: white;
+	width: 300px;
+	height: 300px; 
+	position: absolute; 
+	bottom: 50px; 
+	right: 50px; 
+}
