@@ -5,30 +5,33 @@
     <title>Tic Tac Toe!</title>
     <link rel="stylesheet" href="css/style.css">
     <script src="js/angular.js"></script>
-    <script src="js/app.js"></script>
-  </head>
+    
+    <!-- Firebase -->
+  <script src="https://cdn.firebase.com/js/client/1.0.18/firebase.js"></script>
+<!-- AngularFire -->
+  <script src="https://cdn.firebase.com/libs/angularfire/0.7.1/angularfire.min.js"></script>
+  <script src="js/app.js"></script>
+  </head> 
   <body ng-controller="TicTacController">
 
     <h1>Tic Tac Toe</h1>
-    <span ng-show="currentSymbol() == 'X'">{{player1}}'s Turn</span>
-    <span ng-show="currentSymbol() == 'O'">{{player2}}'s Turn</span>
-    <div id="container" ng-click='switch();'>
-
-      <div ng-repeat="cellToken in cells track by $index" ng-class="{cell:true, clear:($index % 3 == 0), bottom: ($index == 6 || $index == 7 || $index == 8)}" 
-      ng-click = "token($index);" >
-          <div id="unicorn"><img src="img/magic_unicorn.png" ng-show="cells[$index] == 'X'">
-            <img src="img/large_cute-flower.png" ng-show="cells[$index] == 'O'"></div>
+    <h2><span ng-show="currentSymbol() == 'X'">{{player1}}'s Turn</span>
+        <span ng-show="currentSymbol() == 'O'">{{player2}}'s Turn</span></h2>
+    <div id="container">
+      <div ng-repeat="cell in box.cells track by $index" ng-class="{cell:true, clear:($index % 3 == 0)    , bottom: ($index > 5)}" ng-click = "token($index);" >
+          <div id="unicorn"><img src="img/magic_unicorn.png" ng-show="box.cells[$index] == 'X'">
+            <img src="img/large_cute-flower.png" ng-show="box.cells[$index] == 'O'"></div>
       </div>
 
-      
+     
      
 
           
     </div>
     <section class="right-sidebar">
-      <p>{{player1}}</p>
+      <p>{{player1}}   ({{box.player1Counter}})</p>
       <img src="img/magic_unicorn.png">
-      <p>{{player2}}</p>
+      <p>{{player2}} ({{box.player2Counter}})</p>
       <img src="img/large_cute-flower.png">
     </section>
     
@@ -38,4 +41,5 @@
 
 
   </body>
+
 </html>
