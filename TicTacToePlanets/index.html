@@ -5,7 +5,7 @@
     <title>Tic Tac Toe!</title>
     <link rel="stylesheet" href="css/style.css">
     <script src="js/angular.js"></script>
-    
+    <script src="js/ngFx.js"></script>
     <!-- Firebase -->
   <script src="https://cdn.firebase.com/js/client/1.0.18/firebase.js"></script>
 <!-- AngularFire -->
@@ -17,28 +17,38 @@
     <h1>Tic Tac Toe</h1>
     <h2><span ng-show="currentSymbol() == 'X'">{{player1}}'s Turn</span>
         <span ng-show="currentSymbol() == 'O'">{{player2}}'s Turn</span></h2>
-    <div id="container">
-      <div ng-repeat="cell in box.cells track by $index" ng-class="{cell:true, clear:($index % 3 == 0)    , bottom: ($index > 5)}" ng-click = "token($index);" >
-          <div id="unicorn"><img src="img/magic_unicorn.png" ng-show="box.cells[$index] == 'X'">
-            <img src="img/large_cute-flower.png" ng-show="box.cells[$index] == 'O'"></div>
-      </div>
+    <div class="player name">
+      <span ng-click="connectDB()">Play</span>
+        <input type="text">
 
-     
-     
-
-          
     </div>
+    <div id="container">
+        <div ng-repeat="cell in box.cells track by $index" ng-class="{cell:true, clear:($index % 3 == 0), bottom: ($index > 5)}" ng-click = "token($index);" >
+            <div id="unicorn">
+              <img src="img/magic_unicorn.png" ng-show="box.cells[$index] == 'X'">
+              <img src="img/large_cute-flower.png" ng-show="box.cells[$index] == 'O'">
+            </div>
+        </div>         
+    </div>
+
     <section class="right-sidebar">
-      <p>{{player1}}   ({{box.player1Counter}})</p>
-      <img src="img/magic_unicorn.png">
-      <p>{{player2}} ({{box.player2Counter}})</p>
-      <img src="img/large_cute-flower.png">
+        <p>{{player1}}   ({{box.player1Counter}})</p>
+        <img src="img/magic_unicorn.png">
+        <p>{{player2}} ({{box.player2Counter}})</p>
+        <img src="img/large_cute-flower.png">
     </section>
     
-<h1 ng-show="checkForTie() == true">TIE!!!!!</h1>
-<h1 ng-show="checkForWin() == true">WIN!!!!<h1>
-<div class= "reset" ng-click="reset()" ng-show="checkForWin() == true"><p>PLAY AGAIN</p></div>
 
+    <div class= "reset fx-fade-right" ng-click="reset()" ng-show="checkForWin() == true">
+        <h1 ng-show="checkForWin() == true">WIN!!!!<h1>
+        <p>PLAY AGAIN?</p>
+    </div>
+    <div ng-show="checkForWin() !== true">
+        <div class= "reset" ng-click="reset()" ng-show="checkForTie() == true">
+            <h1 ng-show="checkForTie() == true">TIE!!!!!</h1>
+            <p>PLAY AGAIN?</p>
+        </div>
+    </div>
 
   </body>
 

@@ -1,15 +1,20 @@
-var TicTac = angular.module("TicTac", ["firebase"]);
+var TicTac = angular.module("TicTac", ["firebase", "ngFx"]);
 
 
 TicTac.controller('TicTacController', ["$scope", "$firebase", function ($scope, $firebase) {
-  $scope.box = {cells:["", "", "", "", "", "", "", "", ""], userToken: 1}
+  $scope.box = {
+      cells:["", "", "", "", "", "", "", "", ""], 
+      gameInProgress: true,
+      userToken: 1,
+      numberOfPlayers: 0
+    }
   //$scope.userToken = 1;
   $scope.box.player1Counter = 0;
   $scope.box.player2Counter = 0;
 
-
+ var firebaseURL = "https://unicorn-poo.firebaseio.com/data";
  var ref = $firebase( new Firebase("https://unicorn-poo.firebaseio.com/data") );
- ref.$bind($scope,'box');
+ ref.$bind($scope,'box').then(doneConnecting);
 
 $scope.$watch('box', function(){
   console.log('Hello!');
@@ -25,9 +30,60 @@ $scope.player2Name = function() {
 }
 
 
-
 $scope.player1Name();
 $scope.player2Name();
+/**************************************
+          Firebase
+***************************************/
+/* Connects to Firebase and binds the Firebase data to $scope.db */
+    $scope.connectDB = function() {
+      $scope.dbConnecting = true; // indicate we are connecting to FB
+
+      var ref = new Firebase("https://unicorn-poo.firebaseio.com/data");
+
+      // create an AngularFire reference to the data
+      var sync = $firebase(ref);
+
+      // download the data into a local object
+      syncObject = sync.$asObject();
+
+      // wait until object is loaded
+      syncObject.$loaded().then(function() {
+
+        // Synchronize the object with a three-way data binding
+        // Now, $scope.db is bound to Firebase.
+        // Calls doneConnecting(<unbind function>) once $scope.db is bound to the database!
+        syncObject.$bindTo($scope, "box").then( doneConnecting );
+
+      });
+    };
+
+function doneConnecting(unbindFunction) {
+        // If a game is not in progress, initialize Firebase database
+        if (!$scope.box.gameInProgress) {
+          $scope.box = $scope.box;
+        }
+
+        // Set the local player number then increment the total # of players
+        $scope.playerNumber = $scope.box.numberOfPlayers;
+        $scope.box.numberOfPlayers += 1;
+        console.log($scope.playerNumber);
+        
+        // Set player name by default to "Player <playerNumber>", if nothing entered
+        $scope.box.players = $scope.box.players || (new Array());
+        if ($scope.box.players.length < $scope.box.numberOfPlayers) {
+          var finalPlayerName = $scope.playerName || ("Player " + $scope.playerNumber);
+
+          $scope.box.players.push({'name': finalPlayerName});
+        }
+        
+        // We are done connecting!
+        $scope.dbConnecting = false;
+        $scope.dbConnected = true;
+
+        unbindDB = unbindFunction;
+
+    }
 
 
 
@@ -61,7 +117,7 @@ $scope.token= function(position) {
     }
     }
 
-//console.log($scope.checkForTie());
+console.log($scope.checkForTie());
 //console.log('win: ' + $scope.checkForWin());
 
     };
@@ -97,14 +153,13 @@ $scope.currentSymbol = function() {
   //tie if for every element in array, element != ''.
 
 $scope.checkForTie = function() {
-  for (i = 0; i < $scope.box.cells.length; i ++) {
     if ($scope.box.cells.indexOf('') == -1) {
     return true;
   } else {
     return false;
   }
-  }
-};
+  };
+
 
 
 
@@ -139,14 +194,28 @@ $scope.reset = function() {
   
 
 }
-//check for end game and add to counter
+/* Connects to Firebase and binds the Firebase data to $scope.db 
+    $scope.connectDB = function() {
+      $scope.dbConnecting = true; // indicate we are connecting to FB
 
+      var ref = new Firebase(firebaseURL);
 
+      // create an AngularFire reference to the data
+      var sync = $firebase(ref);
 
+      // download the data into a local object
+      syncObject = sync.$asObject();
 
-//$scope.player1Name();
-//$scope.player2Name();
+      // wait until object is loaded
+      syncObject.$loaded().then(function() {
 
+        // Synchronize the object with a three-way data binding
+        // Now, $scope.db is bound to Firebase.
+        // Calls doneConnecting(<unbind function>) once $scope.db is bound to the database!
+        syncObject.$bindTo($scope, "box").then( doneConnecting );
+
+      });
+    };*/
 }]);
 
 

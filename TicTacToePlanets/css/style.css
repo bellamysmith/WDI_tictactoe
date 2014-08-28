@@ -3,6 +3,7 @@ body {
 	background-size: cover;
 	color: black;
 	text-align: center;
+	font-family:'Grand Hotel', cursive; ;
 }
 
 #container {
@@ -23,10 +24,6 @@ h2 {
 	color: yellow;
 }
 
-li {
-	list-style: none;
-	margin-top: 10px;
-}
 
 .cell {
 	border-left: solid yellow 4px;
@@ -66,18 +63,48 @@ img {
 	top: 175px;
 	left: 100px;
 	font-size: 40px;
-	font-family: ;
 	width: 200px;
 	font-family: 'Grand Hotel', cursive;
 	background-color: rgba(255, 255, 255, .6);
 }
 
 .reset {
-	background-color: purple; 
+	background-color: rgba(165, 40, 237, 0.6); 
 	color: white;
-	width: 300px;
-	height: 300px; 
-	position: absolute; 
-	bottom: 50px; 
-	right: 50px; 
+	width: 100%;
+	 
+	position: absolute;
+	left: -10px;
+	top: 300px;
+	margin: 0 auto;
+}
+
+.reset > h1 {
+	color: white;
+	position: relative;
+	top: -10px;
+}
+
+.animate-enter, 
+.animate-leave
+{ 
+    -webkit-transition: 825ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -moz-transition: 825ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -ms-transition: 825ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -o-transition: 825ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    transition: 825ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+} 
+ 
+.animate-enter {
+    left: 100%;
+}
+.animate-enter.animate-enter-active {
+    left: 0;
+}
+ 
+.animate-leave {
+    left: 0;
+}
+.animate-leave.animate-leave-active{
+    left: -100%;
 }
