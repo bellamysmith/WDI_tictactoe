@@ -1,55 +1,67 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html ng-app="TicTac">
   <head>
-    <link href='http://fonts.googleapis.com/css?family=Fascinate|Grand+Hotel' rel='stylesheet' type='text/css'>
-    <title>Tic Tac Toe!</title>
-    <link rel="stylesheet" href="css/style.css">
-    <script src="js/angular.js"></script>
-    <script src="js/ngFx.js"></script>
+    <meta charset="utf-8">
+
+    <title>Unicorns and Rainbows</title>
+
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <![endif]-->
+
+       <link href='http://fonts.googleapis.com/css?family=Fascinate|Grand+Hotel' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="css/style.css">
+
+    <!-- AngularJS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.17/angular.min.js"></script>
+
     <!-- Firebase -->
-  <script src="https://cdn.firebase.com/js/client/1.0.18/firebase.js"></script>
-<!-- AngularFire -->
-  <script src="https://cdn.firebase.com/libs/angularfire/0.7.1/angularfire.min.js"></script>
-  <script src="js/app.js"></script>
-  </head> 
+    <script src="https://cdn.firebase.com/js/client/1.0.18/firebase.js"></script>
+
+    <!-- AngularFire -->
+    <script src="https://cdn.firebase.com/libs/angularfire/0.8.0/angularfire.min.js"></script>
+
+        <script src="js/app.js"></script>
+  </head>
+
   <body ng-controller="TicTacController">
 
     <h1>Tic Tac Toe</h1>
-    <h2><span ng-show="currentSymbol() == 'X'">{{player1}}'s Turn</span>
-        <span ng-show="currentSymbol() == 'O'">{{player2}}'s Turn</span></h2>
-    <div class="player name">
-      <span ng-click="connectDB()">Play</span>
-        <input type="text">
-
+    <h2 ng-If="db.numberOfPlayers < 2">Waiting for player 2</h2>
+    <div ng-show="dbConnected">
+        <h2 ng-show="db.playerTurn === playerNumber">{{playerName}}, it's your turn!</h2>
     </div>
-    <div id="container">
-        <div ng-repeat="cell in box.cells track by $index" ng-class="{cell:true, clear:($index % 3 == 0), bottom: ($index > 5)}" ng-click = "token($index);" >
-            <div id="unicorn">
-              <img src="img/magic_unicorn.png" ng-show="box.cells[$index] == 'X'">
-              <img src="img/large_cute-flower.png" ng-show="box.cells[$index] == 'O'">
-            </div>
-        </div>         
-    </div>
+        
+        <div ng-hide="dbConnected">
+            <p>Enter your name: <input type="text" ng-model="playerName"></p>
+            <span ng-click="connectDB()">Connect To Server</span>
+        </div>
 
-    <section class="right-sidebar">
-        <p>{{player1}}   ({{box.player1Counter}})</p>
-        <img src="img/magic_unicorn.png">
-        <p>{{player2}} ({{box.player2Counter}})</p>
-        <img src="img/large_cute-flower.png">
-    </section>
-    
-
-    <div class= "reset fx-fade-right" ng-click="reset()" ng-show="checkForWin() == true">
-        <h1 ng-show="checkForWin() == true">WIN!!!!<h1>
-        <p>PLAY AGAIN?</p>
-    </div>
-    <div ng-show="checkForWin() !== true">
-        <div class= "reset" ng-click="reset()" ng-show="checkForTie() == true">
-            <h1 ng-show="checkForTie() == true">TIE!!!!!</h1>
+        
+        <div ng-show="dbConnecting">
+            <p>Connecting to database ...</p>
+        </div>
+        <div ng-show="dbConnected" id="container">
+            <div ng-repeat="cell in db.cells track by $index" ng-class="{cell:true, clear:($index % 3 == 0), bottom: ($index > 5)}" ng-click = "token($index);" >
+                <div id="unicorn">
+                  <img src="img/magic_unicorn.png" ng-show="db.cells[$index] == 'X'">
+                  <img src="img/large_cute-flower.png" ng-show="db.cells[$index] == 'O'">
+                </div>
+            </div>         
+        </div>
+        <div class= "reset fx-fade-right" ng-click="reset()" ng-If="checkForWin() == true">
+            <h1 ng-If="checkForWin() == true">WIN!!!!<h1>
+            <p>PLAY AGAIN?</p>
+        </div>
+        <div ng-If="checkForTie() !== true">
+            <div class= "reset" ng-click="reset()" ng-If="checkForTie() == true">
+            <h1 ng-If="checkForTie() == true">TIE!!!!!</h1>
             <p>PLAY AGAIN?</p>
         </div>
     </div>
+    <span id="endBtn" ng-click="endGame()" ng-show="dbConnected">End Game</span>
+    
 
   </body>
-
-</html>
+  </html>
