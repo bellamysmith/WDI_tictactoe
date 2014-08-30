@@ -10,8 +10,11 @@
     <script src="js/html5shiv.js"></script>
     <![endif]-->
 
-       <link href='http://fonts.googleapis.com/css?family=Fascinate|Grand+Hotel' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" href="css/style.css">
+       <link href='https://fonts.googleapis.com/css?family=Fascinate|Grand+Hotel' rel='stylesheet' type='text/css'>
+       
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/normalize.css">
+         <link rel="stylesheet" href="css/style.css">
 
     <!-- AngularJS -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.17/angular.min.js"></script>
@@ -22,20 +25,25 @@
     <!-- AngularFire -->
     <script src="https://cdn.firebase.com/libs/angularfire/0.8.0/angularfire.min.js"></script>
 
-        <script src="js/app.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/ngFx.js"></script>
   </head>
 
   <body ng-controller="TicTacController">
 
     <h1>Tic Tac Toe</h1>
-    <h2 ng-If="db.numberOfPlayers < 2">Waiting for player 2</h2>
+    <h2 ng-If="db.gameInProgress == true && db.numberOfPlayers < 2">Waiting for player 2...</h2>
     <div ng-show="dbConnected">
-        <h2 ng-show="db.playerTurn === playerNumber">{{playerName}}, it's your turn!</h2>
+        <h2 ng-show="db.playerTurn === playerNumber && db.numberOfPlayers >= 2">It's your turn!</h2>
+        <h2 ng-show="db.playerTurn !== playerNumber && db.numberOfPlayers >= 2">It's not your turn, yet!</h2>
     </div>
         
-        <div ng-hide="dbConnected">
-            <p>Enter your name: <input type="text" ng-model="playerName"></p>
-            <span ng-click="connectDB()">Connect To Server</span>
+        <div class="front-page" ng-hide="dbConnected">
+        <form role="form" ng-submit="connectDB()">
+            <p>Enter your name:</p>
+            <input type="text"  autofocus ng-model="playerName"><br>
+            <span ng-click="connectDB()" class="fx-zoom-down">Play Tic Tac Toe!</span>
+        </form>
         </div>
 
         
@@ -50,17 +58,48 @@
                 </div>
             </div>         
         </div>
-        <div class= "reset fx-fade-right" ng-click="reset()" ng-If="checkForWin() == true">
+        
+        <div class= "reset fx-fade-right fx-easing-bounce" ng-click="reset()" ng-If="checkForWin() == true">
             <h1 ng-If="checkForWin() == true">WIN!!!!<h1>
             <p>PLAY AGAIN?</p>
         </div>
-        <div ng-If="checkForTie() !== true">
+        <div ng-If="checkForWin() !== true">
             <div class= "reset" ng-click="reset()" ng-If="checkForTie() == true">
-            <h1 ng-If="checkForTie() == true">TIE!!!!!</h1>
+            <h1>TIE!!!!!</h1>
             <p>PLAY AGAIN?</p>
         </div>
+        <div ng-If="dbConnected && db.gameInProgress == false" class="reset fx-fade-right">
+            <h1>Someone pressed end game!</h1>
+            <h2>Please refresh your browser to play a new game!</h2>
+        </div>
+
     </div>
+    
     <span id="endBtn" ng-click="endGame()" ng-show="dbConnected">End Game</span>
+    
+
+    <section class="right-sidebar fx-fade-up" ng-show="dbConnected">
+        <div><p>{{db.players[0].name}}   <span class="winCounter" ng-show="db.player1Counter > 0">Wins: {{db.player1Counter}}</span></p>
+           <img src="img/magic_unicorn.png"></div>
+        <div><p>{{db.players[1].name}} <span class="winCounter" ng-show="db.player2Counter > 0">Wins: {{db.player2Counter}}</span></p>
+           <img src="img/large_cute-flower.png"></div>
+     </section>
+    
+    <section class="chatbox fx-fade-up" ng-show="dbConnected">
+        <div class="messages">
+            <p ng-repeat="message in db.messages track by $index">{{message}}</p>
+        </div>
+ 
+    </section>
+        <div class="input" ng-show="dbConnected">
+            <h3>Say hello!</h3>
+                <form role="form">
+                    <input type="text" ng-model="addMessage">
+                    <button class="btn btn primary" ng-click="addMessages()" ng-submit="addMessages()">Send</button>
+                </form>
+        </div>
+        
+        
     
 
   </body>

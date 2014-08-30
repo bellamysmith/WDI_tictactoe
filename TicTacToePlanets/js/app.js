@@ -1,17 +1,18 @@
 var firebaseURL = "https://unicorn-poo.firebaseio.com/";
-var TicTac = angular.module("TicTac", ["firebase"]);
+var TicTac = angular.module("TicTac", ["firebase", "ngFx"]);
 
 TicTac.controller('TicTacController', ["$scope", "$firebase", function ($scope, $firebase) {
     var syncObject = null;    // Firebase synced data
     var unbindDB = null;      // function that unbinds the DB
     var initialDBValues = {
       //players: [],  // To remind me this is shared (but created later)
-      //guesses: [],  // To remind me this is shared (but created later)
       cells:["","","","","","","","",""],
       currPlayer: 0,
       playerTurn: 0,
       gameInProgress: true,
-      numberOfPlayers: 0
+      numberOfPlayers: 0,
+      player1Counter: 0,
+      player2Counter: 0
      };
 
     // Scope-wide variables
@@ -92,6 +93,7 @@ TicTac.controller('TicTacController', ["$scope", "$firebase", function ($scope, 
     /* Ensure the game updated to not in progress then disconnect from the DB */
     $scope.endGame = function() {
       $scope.db.gameInProgress = false;
+      $scope.db.players = null;
       syncObject.$save().then( disconnectDB );
     };
 
@@ -125,14 +127,9 @@ $scope.token= function(position) {
     console.log("token " + $scope.playerNumber)
     $scope.checkForTie();
     $scope.checkForWin();
+    $scope.winCount();
 
-    if ($scope.checkForWin() === true) {
-      if ($scope.db.playerNumber === 1) {
-      $scope.player1Counter += 1;
-    } else {
-      $scope.player2Counter += 1;
-    }
-    }
+
 
 console.log($scope.checkForTie());
 console.log('win: ' + $scope.checkForWin());
@@ -187,14 +184,34 @@ $scope.checkForWin = function() {
 
 }
 }
+$scope.winCount = function() {
+    if ($scope.checkForWin() === true) {
+      if ($scope.playerNumber === 0) {
+      $scope.db.player1Counter += 1;
+    } else {
+      $scope.db.player2Counter += 1;
+    }
+    }
+  };
 
 
 $scope.reset = function() {
   $scope.db.cells = ["", "", "", "", "", "", "", "", ""];
-  $scope.playerNumber = 0;
+  $scope.db.playerTurn = $scope.playerNumber;
+ }
+
+
+$scope.addMessages = function(){
+  $scope.db.messages = $scope.db.messages || (new Array());
+   $scope.db.messages.push($scope.db.players[$scope.playerNumber].name + ": " + $scope.addMessage);
+   console.log($scope.addMessage);
+
+ 
+}
+
   
 
-}
+
 
 
 

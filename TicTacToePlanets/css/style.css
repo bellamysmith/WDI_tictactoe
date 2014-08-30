@@ -6,6 +6,14 @@ body {
 	font-family:'Grand Hotel', cursive; ;
 }
 
+
+.front-page p {
+	font-size: 30px;
+}
+.front-page input{
+	position: relative; 
+	top: -15px;
+}
 #container {
 	position: relative; 
 	top: 40px;
@@ -16,12 +24,13 @@ body {
 h1 { 
 	text-align: center;
 	color: #ff88ff;
-	font-size: 60px;
+	font-size: 4em;
 	font-family: 'Fascinate', cursive;
 }
 
 h2 {
 	color: yellow;
+	font-size: 36px;
 }
 
 
@@ -56,23 +65,59 @@ img {
 
 }
 
-.right-sidebar {
-	color: blue;
-	position: absolute;
-	display: inline-block;
-	top: 175px;
-	left: 100px;
-	font-size: 40px;
-	width: 200px;
-	font-family: 'Grand Hotel', cursive;
-	background-color: rgba(255, 255, 255, .6);
+@media (max-width: 1000px){
+	.right-sidebar {
+		position: absolute;
+		bottom: 20px;
+		left: 20px;
+		display: inline;
+		width: 95%;
+		height: 125px;
+		font-size: 30px;
+		font-family: 'Grand Hotel', cursive;
+		background-color: rgba(255, 255, 255, .6);
+		color: blue;
+
+	
+	}
+	.right-sidebar div {
+		display: inline-block;
+		width: 200px;
+
+	}
+	.right-sidebar > div > img {
+		height: 80px;
+		width: 80px;
+		position: relative;
+		top: -10px;
+	}
+	
 }
+@media (min-width: 1001px){
+	.right-sidebar {
+		color: blue;
+		position: absolute;
+		display: inline-block;
+		top: 175px;
+		left: 100px;
+		font-size: 40px;
+		width: 200px;
+		font-family: 'Grand Hotel', cursive;
+		background-color: rgba(255, 255, 255, .6);
+
+	}
+	.right-sidebar > div {
+		padding-bottom: 40px;
+		padding-top: 40px;
+	}
+}
+
 
 .reset {
 	background-color: rgba(165, 40, 237, 0.6); 
 	color: white;
 	width: 100%;
-	 
+	 z-index: 2;
 	position: absolute;
 	left: -10px;
 	top: 300px;
@@ -84,4 +129,46 @@ img {
 	position: relative;
 	top: -10px;
 }
+
+#endBtn {
+	position: fixed;
+	bottom: 0px;
+	left: 43%;
+	margin-right: 0 auto;
+	border: solid blue 1px;
+	background-color: rgba(165, 40, 237, .8);
+	padding: 5px;
+	z-index: 5;
+}
+
+.chatbox > p {
+	font-size: 34px;
+	
+}
+
+.chatbox  {
+	background-color: rgba(255, 255, 255, .7);
+	width: 20%;
+	position: absolute;
+	right: 7%;
+	top: 35%;
+	max-height: 45%;
+	color: purple;
+	font-size: 24px;
+	overflow: scroll;
+	border: solid lightgrey 3px;
+}
+
+.input {
+	position: absolute;
+	right: 100px;
+	top: 100px;
+	background-color: white;
+	padding-bottom: 10px;
+	width: 20%;
+	z-index: 6;
+	border: solid lightgrey 3px;
+}
+
+	
 
