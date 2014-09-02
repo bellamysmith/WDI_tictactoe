@@ -1,0 +1,9 @@
+{
+  "firebase": "unicorn-poo",
+  "public": ".",
+  "ignore": [
+    "firebase.json",
+    "**/.*",
+    "**/node_modules/**"
+  ]
+}
